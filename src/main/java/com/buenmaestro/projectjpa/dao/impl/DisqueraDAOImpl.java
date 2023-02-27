@@ -46,8 +46,9 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}
 
 	}
-	
-	//Merge se usa para cambiar un valor de un obejeto que se manea como entidad de JPA hacia mi gestor de BD
+
+	// Merge se usa para cambiar un valor de un obejeto que se manea como entidad de
+	// JPA hacia mi gestor de BD
 	@Override
 	public void actualizar(Disquera disquera) {
 		// TODO Auto-generated method stub
@@ -99,9 +100,10 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 	@Override
 	public List<Disquera> consultar() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
-		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em.createQuery("FROM Disquera ORDER BY descripcion");
-		
+
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em
+				.createQuery("FROM Disquera ORDER BY descripcion");
+
 		return queryDisquera.getResultList();
 	}
 
@@ -116,6 +118,16 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}
 
 		return disqueraConsultado;
+	}
+
+	@Override
+	public Disquera consultarByDescripcionNative(String descripcion) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em
+				.createNativeQuery("SELECT * FROM Disquera WHERE descripcion = :cielo");
+		queryDisquera.setParameter("cielo", descripcion);
+		return queryDisquera.getSingleResult();
 	}
 
 }
